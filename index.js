@@ -2,26 +2,25 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const authRoute = require("./routes/auth");
 
 // Load environment variables from .env file
 dotenv.config();
 
-// MongoDB connection
-const MONGO_URL = process.env.MONGO_URL;
-
 mongoose
-  .connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log("Database connected successfully BOSS!");
-  })
+  .connect(process.env.MONGO_URL)
+  .then(() => console.log("db connected BOSS!!!"))
   .catch((err) => {
-    console.error("WADUHH Database connection error:", err);
+    console.log(err);
   });
 
 // Basic route
-app.get("/", (req, res) => {
-  res.send("Hello IDHAM GANTENG!!!");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hello IDHAM GANTENG!!!");
+// });
+
+app.use(express.json());
+app.use("/api/", authRoute);
 
 // Start the server
 const PORT = process.env.PORT || 5002;

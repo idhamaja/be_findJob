@@ -12,4 +12,4 @@ const BookMarkSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("BookMarkModel", UserSchema);
+module.exports = mongoose.model("BookMarkModel", BookMarkSchema);
