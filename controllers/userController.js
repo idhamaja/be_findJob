@@ -7,7 +7,7 @@ module.exports = {
       req.body.password = CryptoJS.AES.encrypt(
         req.body.password,
         process.env.SECRETPW
-      );
+      ).toString();
     }
 
     try {
@@ -19,9 +19,23 @@ module.exports = {
         { new: true }
       );
 
-      const { password, __v, createdAt, ...others } = this.updateUser._doc;
+      const { password, __v, createdAt, ...others } = updateUser._doc;
+
+      console.log(others);
 
       res.status(200).json({ ...others });
-    } catch (error) {}
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  },
+
+  //DELETE FUNCTION
+  deleteUser: async (req, res) => {
+    try {
+      await UserModel.findByIdAndDelete(req.params.id);
+      res.status(200).json("Account SUCCESSFULLY DELETED BOSS!!");
+    } catch (error) {
+      res.status(500).json(error);
+    }
   },
 };

@@ -1,5 +1,6 @@
 const UserModel = require("../models/UserModel");
 const CryptoJS = require("crypto-js");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   createUser: async (req, res) => {
@@ -10,18 +11,20 @@ module.exports = {
         req.body.password,
         process.env.SECRETPW
       ).toString(),
+      // Tidak perlu menyertakan skills jika tidak ada data
     });
 
     try {
       const savedUser = await newUser.save();
-
-      res.status(201).json(savedUser);
+      res
+        .status(201)
+        .json({ savedUser, message: "User created successfully BOSS!!" });
     } catch (error) {
       res.status(500).json(error);
     }
   },
 
-  //login function
+  // Login function
   loginUser: async (req, res) => {
     try {
       const { email, password } = req.body;
@@ -44,10 +47,21 @@ module.exports = {
       }
 
       // Hapus password dari response untuk keamanan
-      const { password: _, ...userData } = user._doc;
+      const { password: __v, createdAt, ...others } = user._doc;
+
+      // TOKEN JWT
+      const userToken = jwt.sign(
+        {
+          id: user._id,
+          isAdmin: user.isAdmin,
+          isAgent: user.isAgent,
+        },
+        process.env.JWT_SEC,
+        { expiresIn: "21d" }
+      );
 
       // Kirim response sukses
-      res.status(200).json({ message: "Login berhasil", user: userData });
+      res.status(200).json({ ...others, userToken });
     } catch (error) {
       console.error("Login error:", error);
       res.status(500).json({ message: "Terjadi kesalahan saat login" });

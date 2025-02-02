@@ -1,12 +1,12 @@
 const UserModel = require("../models/UserModel");
-const JWT = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 const verifyToken = (req, res, next) => {
   const authHeader = req.header.token;
 
   if (authHeader) {
     const token = authHeader.split(" ")[1];
-    JWT.verify(token, process.env.JWT_SEC, async (err, user) => {
+    jwt.verify(token, process.env.JWT_SEC, async (err, user) => {
       if (err) {
         res.status(403).json("Invalid token");
       } else {
@@ -16,10 +16,11 @@ const verifyToken = (req, res, next) => {
       }
     });
   } else {
-    return res.status(401).json("You are not authenticated!!");
+    return res.status(401).json("You are not authenticated, SORRY!!");
   }
 };
 
+//VERIFY TOKEN
 const verifyAuthorization = (req, res, next) => {
   verifyToken(req, res, () => {
     if (req.user.id === req.params.id) {

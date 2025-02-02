@@ -3,6 +3,7 @@ const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const authRoute = require("./routes/auth");
+const userRoute = require("./routes/user");
 
 // Load environment variables from .env file
 dotenv.config();
@@ -14,16 +15,22 @@ mongoose
     console.log(err);
   });
 
-// Basic route
+//Basic route
 // app.get("/", (req, res) => {
 //   res.send("Hello IDHAM GANTENG!!!");
 // });
 
 app.use(express.json());
 app.use("/api/", authRoute);
+app.use("/api/users/", userRoute);
 
 // Start the server
-const PORT = process.env.PORT || 5002;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+app.listen(
+  process.env.PORT || 5002,
+  console.log(`Example app listening on port ${process.env.PORT}`)
+);
+
+// const PORT = process.env.PORT || 5002;
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
