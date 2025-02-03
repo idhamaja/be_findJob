@@ -12,7 +12,7 @@ const JobSchema = new mongoose.Schema(
     requirements: { type: Array, required: true },
     imageUrl: { type: String, required: true },
     agentId: {
-      type: moongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "UserModel",
       required: true,
     },
