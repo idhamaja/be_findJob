@@ -38,4 +38,25 @@ module.exports = {
       res.status(500).json(error);
     }
   },
+
+  //GET FUNCTION
+  getUser: async (req, res) => {
+    try {
+      const user = await UserModel.findById(req.params.id);
+      const { password, __v, createdAt, updatedAt, ...userData } = user._doc;
+      res.status(200).json(userData);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  },
+
+  //GET ALL FUNCTION
+  getAllUsers: async (req, res) => {
+    try {
+      const allUsers = await UserModel.find();
+      res.status(200).json(allUsers);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  },
 };
