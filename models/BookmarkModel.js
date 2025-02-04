@@ -7,9 +7,9 @@ const BookMarkSchema = new mongoose.Schema(
     title: { type: String, required: true },
     imageUrl: { type: String, required: true },
     company: { type: String, required: true },
-    locaton: { type: String, required: true },
+    location: { type: String, required: true },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("BookMarkModel", BookMarkSchema);
+module.exports = mongoose.model("BookmarkModel", BookMarkSchema);

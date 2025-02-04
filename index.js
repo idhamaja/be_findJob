@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
 const jobRoute = require("./routes/job");
+const bookmarkRoute = require("./routes/bookmark");
 
 // Load environment variables from .env file
 dotenv.config();
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use("/api/", authRoute);
 app.use("/api/users/", userRoute);
 app.use("/api/jobs/", jobRoute);
+app.use("/api/bookmarks/", bookmarkRoute);
 
 // Start the server
 app.listen(
