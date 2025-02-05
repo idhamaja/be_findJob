@@ -24,9 +24,9 @@ mongoose
 
 app.use(express.json());
 app.use("/api/", authRoute);
-app.use("/api/users/", userRoute);
-app.use("/api/jobs/", jobRoute);
-app.use("/api/bookmarks/", bookmarkRoute);
+app.use("/api/users", userRoute);
+app.use("/api/jobs", jobRoute);
+app.use("/api/bookmarks", bookmarkRoute);
 
 // Start the server
 app.listen(

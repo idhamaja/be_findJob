@@ -12,19 +12,19 @@ module.exports = {
     }
   },
 
-  getBookmarks: async (req, res) => {
+  deleteBookmark: async (req, res) => {
     try {
-      const bookmarks = await Bookmark.find({ userId: req.params.userId });
-      res.status(200).json(bookmarks);
+      await Bookmark.findOneAndDelete(req.params.userId);
+      res.status(200).json("Bookmark Successfully Deleted BOSS!!");
     } catch (error) {
       res.status(500).json(error);
     }
   },
 
-  deleteBookmark: async (req, res) => {
+  getBookmarks: async (req, res) => {
     try {
-      await Bookmark.findByIdAndDelete(req.params.id);
-      req.status(200).json("Bookmark Successfully Deleted BOSS!!!");
+      const bookmarks = await Bookmark.find({ userId: req.params.userId });
+      res.status(200).json(bookmarks);
     } catch (error) {
       res.status(500).json(error);
     }
